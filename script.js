@@ -1,12 +1,12 @@
 // ============================================
-// SOUTH AFRICAN WEATHER APP
+// SOUTH AFRICAN WEATHER APP - PREMIUM VERSION
 // ============================================
 
-// TODO: Replace with your OpenWeatherMap API key
-const API_KEY = 'ed99bc250ab1ea2f838dc6e924f7d026'; //
+// API Configuration
+const API_KEY = 'ed99bc250ab1ea2f838dc6e924f7d026';
 const API_BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
-// DOM Elements
+// DOM Elements - Updated for new HTML structure
 const cityInput = document.getElementById('cityInput');
 const searchBtn = document.getElementById('searchBtn');
 const locationBtn = document.getElementById('locationBtn');
@@ -14,8 +14,9 @@ const loading = document.getElementById('loading');
 const error = document.getElementById('error');
 const errorMessage = document.getElementById('errorMessage');
 const currentWeather = document.getElementById('currentWeather');
-const forecast = document.getElementById('forecast');
-const quickCityButtons = document.querySelectorAll('.city-chip');
+const forecast = document.getElementById('forecastContainer');
+const quickCityButtons = document.querySelectorAll('.city-card');
+const retryBtn = document.querySelector('.retry-btn');
 
 // ============================================
 // EVENT LISTENERS
@@ -66,6 +67,14 @@ quickCityButtons.forEach(button => {
     });
 });
 
+// Retry button for errors
+if (retryBtn) {
+    retryBtn.addEventListener('click', () => {
+        error.classList.add('hidden');
+        getWeatherByCity('Johannesburg');
+    });
+}
+
 // ============================================
 // API FUNCTIONS
 // ============================================
@@ -73,6 +82,7 @@ quickCityButtons.forEach(button => {
 // Get weather by city name
 async function getWeatherByCity(city) {
     showLoading();
+    hideError();
     
     try {
         // Get current weather
@@ -137,13 +147,13 @@ async function getWeatherByCoordinates(lat, lon) {
 }
 
 // ============================================
-// DISPLAY FUNCTIONS
+// DISPLAY FUNCTIONS - UPDATED FOR NEW HTML
 // ============================================
 
 // Display current weather
 function displayCurrentWeather(data) {
     // Update city name and date
-    document.getElementById('cityName').textContent = `${data.name}, ${data.sys.country}`;
+    document.getElementById('cityName').textContent = data.name;
     document.getElementById('currentDate').textContent = formatDate(new Date());
     
     // Update temperature
@@ -152,9 +162,10 @@ function displayCurrentWeather(data) {
     
     // Update weather icon
     const iconElement = document.getElementById('weatherIcon');
-    iconElement.className = getWeatherIconClass(data.weather[0].main);
+    const weatherCondition = data.weather[0].main;
+    iconElement.className = getWeatherIconClass(weatherCondition);
     
-    // Update details
+    // Update additional details
     document.getElementById('feelsLike').textContent = `${Math.round(data.main.feels_like)}°C`;
     document.getElementById('humidity').textContent = `${data.main.humidity}%`;
     document.getElementById('windSpeed').textContent = `${Math.round(data.wind.speed * 3.6)} km/h`;
@@ -165,11 +176,14 @@ function displayCurrentWeather(data) {
     // Update last update time
     document.getElementById('updateTime').textContent = formatTime(new Date());
     
+    // Update weather quality text
+    updateWeatherQuality(data.weather[0].main, data.main.temp);
+    
     // Show current weather section
     currentWeather.classList.remove('hidden');
 }
 
-// Display 5-day forecast
+// Display 5-day forecast - UPDATED FOR NEW STRUCTURE
 function displayForecast(data) {
     const forecastContainer = document.getElementById('forecastContainer');
     forecastContainer.innerHTML = '';
@@ -186,10 +200,10 @@ function displayForecast(data) {
     });
     
     // Show forecast section
-    forecast.classList.remove('hidden');
+    document.querySelector('.forecast-section').classList.remove('hidden');
 }
 
-// Create forecast card
+// Create forecast card - UPDATED FOR NEW STRUCTURE
 function createForecastCard(data) {
     const card = document.createElement('div');
     card.className = 'forecast-card';
@@ -208,6 +222,28 @@ function createForecastCard(data) {
     `;
     
     return card;
+}
+
+// Update weather quality text
+function updateWeatherQuality(condition, temperature) {
+    const qualityElement = document.querySelector('.weather-quality');
+    let qualityText = '';
+    
+    if (condition === 'Clear' && temperature > 25) {
+        qualityText = 'Perfect beach weather';
+    } else if (condition === 'Clear') {
+        qualityText = 'Excellent conditions';
+    } else if (condition === 'Clouds') {
+        qualityText = 'Partly cloudy';
+    } else if (condition === 'Rain' || condition === 'Drizzle') {
+        qualityText = 'Rainy conditions';
+    } else if (condition === 'Thunderstorm') {
+        qualityText = 'Storm warning';
+    } else {
+        qualityText = 'Good conditions';
+    }
+    
+    qualityElement.textContent = qualityText;
 }
 
 // ============================================
@@ -258,9 +294,8 @@ function formatTime(date) {
 // Show loading
 function showLoading() {
     loading.classList.remove('hidden');
-    error.classList.add('hidden');
     currentWeather.classList.add('hidden');
-    forecast.classList.add('hidden');
+    document.querySelector('.forecast-section')?.classList.add('hidden');
 }
 
 // Hide loading
@@ -273,7 +308,12 @@ function showError(message) {
     errorMessage.textContent = message;
     error.classList.remove('hidden');
     currentWeather.classList.add('hidden');
-    forecast.classList.add('hidden');
+    document.querySelector('.forecast-section')?.classList.add('hidden');
+}
+
+// Hide error
+function hideError() {
+    error.classList.add('hidden');
 }
 
 // ============================================
@@ -283,10 +323,28 @@ function showError(message) {
 // Load default city on page load
 window.addEventListener('DOMContentLoaded', () => {
     // Check if API key is set
-    if (API_KEY === 'YOUR_API_KEY_HERE') {
-        showError('Please add your OpenWeatherMap API key in script.js file. See instructions in the setup guide.');
+    if (!API_KEY || API_KEY === 'YOUR_API_KEY_HERE') {
+        showError('Please add your OpenWeatherMap API key in script.js file.');
     } else {
         // Load Johannesburg weather by default
         getWeatherByCity('Johannesburg');
+        
+        // Set input placeholder based on time of day
+        const hour = new Date().getHours();
+        let greeting = '';
+        if (hour < 12) greeting = 'Morning';
+        else if (hour < 18) greeting = 'Afternoon';
+        else greeting = 'Evening';
+        
+        cityInput.placeholder = `Good ${greeting}! Search for a South African city...`;
     }
+});
+
+// Add input focus effect
+cityInput.addEventListener('focus', () => {
+    cityInput.parentElement.classList.add('focused');
+});
+
+cityInput.addEventListener('blur', () => {
+    cityInput.parentElement.classList.remove('focused');
 });
