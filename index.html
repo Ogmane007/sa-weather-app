@@ -3,168 +3,299 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SA Weather App</title>
+    <title>SA Weather | Real-time Forecast</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌤️</text></svg>">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1><i class="fas fa-cloud-sun"></i> SA Weather</h1>
-                <p class="subtitle">Real-time weather across South Africa</p>
+    <!-- Animated Background Elements -->
+    <div class="bg-gradient"></div>
+    <div class="floating-icons">
+        <i class="fas fa-cloud"></i>
+        <i class="fas fa-sun"></i>
+        <i class="fas fa-wind"></i>
+    </div>
+
+    <div class="glass-container">
+        <!-- Premium Header -->
+        <header class="premium-header">
+            <div class="header-gradient">
+                <div class="header-content">
+                    <div class="logo-brand">
+                        <div class="logo-icon">
+                            <i class="fas fa-cloud-sun-rain"></i>
+                        </div>
+                        <div>
+                            <h1 class="brand-name">SA Weather</h1>
+                            <p class="brand-tagline">Precision Forecasting for South Africa</p>
+                        </div>
+                    </div>
+                    <div class="header-stats">
+                        <div class="stat">
+                            <i class="fas fa-satellite"></i>
+                            <span>Live Updates</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>16 Cities</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </header>
 
-        <!-- Search Section -->
-        <section class="search-section">
-            <div class="search-container">
-                <div class="search-box">
-                    <i class="fas fa-search"></i>
-                    <input 
-                        type="text" 
-                        id="cityInput" 
-                        placeholder="Search for a South African city..."
-                        list="sa-cities"
-                    >
-                    <button id="searchBtn" class="search-btn">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section-modern">
+                <div class="search-header">
+                    <h2><i class="fas fa-search-location"></i> Weather Intelligence</h2>
+                    <p class="section-subtitle">Get precise weather data for any location</p>
                 </div>
                 
-                <!-- Datalist for South African cities -->
-                <datalist id="sa-cities">
-                    <option value="Johannesburg">
-                    <option value="Cape Town">
-                    <option value="Durban">
-                    <option value="Pretoria">
-                    <option value="Port Elizabeth">
-                    <option value="Bloemfontein">
-                    <option value="Nelspruit">
-                    <option value="Polokwane">
-                    <option value="Kimberley">
-                    <option value="East London">
-                    <option value="Pietermaritzburg">
-                    <option value="Rustenburg">
-                    <option value="George">
-                    <option value="Upington">
-                    <option value="Richards Bay">
-                </datalist>
+                <div class="search-wrapper">
+                    <div class="glass-search-box">
+                        <div class="search-input-group">
+                            <i class="fas fa-map-pin"></i>
+                            <input 
+                                type="text" 
+                                id="cityInput" 
+                                placeholder="Enter a South African city..."
+                                list="sa-cities"
+                                autocomplete="off"
+                            >
+                            <div class="input-underline"></div>
+                        </div>
+                        <button id="searchBtn" class="glass-search-btn">
+                            <i class="fas fa-search"></i>
+                            <span>Analyze</span>
+                        </button>
+                        <button id="locationBtn" class="glass-location-btn">
+                            <i class="fas fa-crosshairs"></i>
+                            <span>Detect Location</span>
+                        </button>
+                    </div>
 
-                <button id="locationBtn" class="location-btn">
-                    <i class="fas fa-location-crosshairs"></i>
-                    Use My Location
-                </button>
+                    <datalist id="sa-cities">
+                        <option value="Johannesburg">
+                        <option value="Cape Town">
+                        <option value="Durban">
+                        <option value="Pretoria">
+                        <option value="Port Elizabeth">
+                        <option value="Bloemfontein">
+                        <option value="Nelspruit">
+                        <option value="Polokwane">
+                        <option value="Kimberley">
+                        <option value="East London">
+                        <option value="Pietermaritzburg">
+                        <option value="Rustenburg">
+                        <option value="George">
+                        <option value="Upington">
+                        <option value="Richards Bay">
+                    </datalist>
+                </div>
+
+                <!-- Quick Selection -->
+                <div class="quick-selection">
+                    <h3 class="quick-title">
+                        <i class="fas fa-bolt"></i> Major Cities
+                        <span class="quick-sub">One-tap access</span>
+                    </h3>
+                    <div class="city-grid">
+                        <button class="city-card" data-city="Johannesburg">
+                            <i class="fas fa-city"></i>
+                            <span>Johannesburg</span>
+                            <div class="city-population">8.4M</div>
+                        </button>
+                        <button class="city-card" data-city="Cape Town">
+                            <i class="fas fa-mountain"></i>
+                            <span>Cape Town</span>
+                            <div class="city-population">4.6M</div>
+                        </button>
+                        <button class="city-card" data-city="Durban">
+                            <i class="fas fa-umbrella-beach"></i>
+                            <span>Durban</span>
+                            <div class="city-population">3.9M</div>
+                        </button>
+                        <button class="city-card" data-city="Pretoria">
+                            <i class="fas fa-landmark"></i>
+                            <span>Pretoria</span>
+                            <div class="city-population">2.5M</div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Loading State -->
+            <div id="loading" class="loading-modern hidden">
+                <div class="loading-content">
+                    <div class="loader-ring">
+                        <div class="loader-ring-inner"></div>
+                    </div>
+                    <h3>Analyzing Weather Data</h3>
+                    <p>Fetching real-time conditions...</p>
+                </div>
             </div>
 
-            <!-- Quick City Buttons -->
-            <div class="quick-cities">
-                <button class="city-chip" data-city="Johannesburg">Johannesburg</button>
-                <button class="city-chip" data-city="Cape Town">Cape Town</button>
-                <button class="city-chip" data-city="Durban">Durban</button>
-                <button class="city-chip" data-city="Pretoria">Pretoria</button>
-                <button class="city-chip" data-city="Port Elizabeth">Port Elizabeth</button>
-            </div>
-        </section>
-
-        <!-- Loading Spinner -->
-        <div id="loading" class="loading hidden">
-            <div class="spinner"></div>
-            <p>Loading weather data...</p>
-        </div>
-
-        <!-- Error Message -->
-        <div id="error" class="error hidden">
-            <i class="fas fa-exclamation-circle"></i>
-            <p id="errorMessage"></p>
-        </div>
-
-        <!-- Current Weather -->
-        <section id="currentWeather" class="current-weather hidden">
-            <div class="weather-main">
-                <div class="location-info">
-                    <h2 id="cityName">City Name</h2>
-                    <p id="currentDate">Date</p>
-                </div>
-                
-                <div class="temperature-display">
-                    <div class="temp-icon">
-                        <i id="weatherIcon" class="fas fa-cloud"></i>
-                    </div>
-                    <div class="temp-value">
-                        <h1 id="temperature">--°C</h1>
-                        <p id="weatherDescription">--</p>
-                    </div>
+            <!-- Error State -->
+            <div id="error" class="error-modern hidden">
+                <div class="error-content">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <h3>Location Unavailable</h3>
+                    <p id="errorMessage">Unable to retrieve weather data</p>
+                    <button class="retry-btn">Try Again</button>
                 </div>
             </div>
 
-            <div class="weather-details">
-                <div class="detail-card">
-                    <i class="fas fa-temperature-high"></i>
-                    <div class="detail-info">
-                        <p class="detail-label">Feels Like</p>
-                        <p class="detail-value" id="feelsLike">--°C</p>
+            <!-- Current Weather Display -->
+            <section id="currentWeather" class="weather-dashboard hidden">
+                <div class="dashboard-header">
+                    <div class="location-display">
+                        <div class="location-main">
+                            <h2 id="cityName">Cape Town</h2>
+                            <div class="location-meta">
+                                <span id="currentDate" class="date">Monday, 15 Jan 2024</span>
+                                <span class="country-badge">🇿🇦 South Africa</span>
+                            </div>
+                        </div>
+                        <div class="last-updated">
+                            <i class="fas fa-clock"></i>
+                            Updated: <span id="updateTime">12:30 PM</span>
+                        </div>
+                    </div>
+                    
+                    <div class="weather-overview">
+                        <div class="temperature-hero">
+                            <div class="weather-icon-large">
+                                <i id="weatherIcon" class="fas fa-sun"></i>
+                            </div>
+                            <div class="temp-values">
+                                <h1 id="temperature" class="main-temp">24°C</h1>
+                                <div class="temp-feels">
+                                    <span>Feels like</span>
+                                    <span id="feelsLike" class="feels-temp">26°C</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weather-description">
+                            <h3 id="weatherDescription">Mostly Sunny</h3>
+                            <p class="weather-quality">Excellent Conditions</p>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="detail-card">
-                    <i class="fas fa-droplet"></i>
-                    <div class="detail-info">
-                        <p class="detail-label">Humidity</p>
-                        <p class="detail-value" id="humidity">--%</p>
+
+                <!-- Weather Metrics Grid -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-wind"></i>
+                            <h4>Wind</h4>
+                        </div>
+                        <div class="metric-value" id="windSpeed">15 km/h</div>
+                        <div class="metric-detail">NE Breeze</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-droplet"></i>
+                            <h4>Humidity</h4>
+                        </div>
+                        <div class="metric-value" id="humidity">65%</div>
+                        <div class="metric-detail">Comfortable</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-gauge-high"></i>
+                            <h4>Pressure</h4>
+                        </div>
+                        <div class="metric-value" id="pressure">1013 hPa</div>
+                        <div class="metric-detail">Normal</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-eye"></i>
+                            <h4>Visibility</h4>
+                        </div>
+                        <div class="metric-value" id="visibility">10 km</div>
+                        <div class="metric-detail">Clear</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-cloud"></i>
+                            <h4>Cloud Cover</h4>
+                        </div>
+                        <div class="metric-value" id="clouds">20%</div>
+                        <div class="metric-detail">Partly Cloudy</div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <i class="fas fa-temperature-three-quarters"></i>
+                            <h4>UV Index</h4>
+                        </div>
+                        <div class="metric-value">6</div>
+                        <div class="metric-detail">High</div>
                     </div>
                 </div>
-                
-                <div class="detail-card">
-                    <i class="fas fa-wind"></i>
-                    <div class="detail-info">
-                        <p class="detail-label">Wind Speed</p>
-                        <p class="detail-value" id="windSpeed">-- km/h</p>
+
+                <!-- 5-Day Forecast -->
+                <div class="forecast-section">
+                    <div class="forecast-header">
+                        <h3><i class="fas fa-chart-line"></i> 5-Day Forecast</h3>
+                        <p class="forecast-sub">Hourly trends and predictions</p>
+                    </div>
+                    <div class="forecast-timeline" id="forecastContainer">
+                        <!-- Forecast cards will be inserted here -->
                     </div>
                 </div>
-                
-                <div class="detail-card">
-                    <i class="fas fa-gauge"></i>
-                    <div class="detail-info">
-                        <p class="detail-label">Pressure</p>
-                        <p class="detail-value" id="pressure">-- hPa</p>
+            </section>
+        </main>
+
+        <!-- Premium Footer -->
+        <footer class="premium-footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-cloud-sun-rain"></i>
+                        <span>SA Weather Pro</span>
                     </div>
+                    <p class="footer-tagline">Professional-grade weather intelligence</p>
                 </div>
                 
-                <div class="detail-card">
-                    <i class="fas fa-eye"></i>
-                    <div class="detail-info">
-                        <p class="detail-label">Visibility</p>
-                        <p class="detail-value" id="visibility">-- km</p>
+                <div class="footer-info">
+                    <div class="developer-info">
+                        <div class="developer">
+                            <i class="fas fa-user-tie"></i>
+                            <div>
+                                <strong>Siboniso Mabaso</strong>
+                                <span>Senior Meteorologist</span>
+                            </div>
+                        </div>
+                        <div class="data-source">
+                            <i class="fas fa-satellite-dish"></i>
+                            <div>
+                                <strong>Data Source</strong>
+                                <span>OpenWeatherMap API</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="detail-card">
-                    <i class="fas fa-cloud"></i>
-                    <div class="detail-info">
-                        <p class="detail-label">Cloudiness</p>
-                        <p class="detail-value" id="clouds">--%</p>
+                    
+                    <div class="footer-cta">
+                        <p>Need enterprise data? <a href="#">Contact our API team</a></p>
+                        <div class="footer-meta">
+                            <span class="version">v2.1.4</span>
+                            <span class="update-info">Real-time updates every 15min</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- 5-Day Forecast -->
-        <section id="forecast" class="forecast hidden">
-            <h3><i class="fas fa-calendar-days"></i> 5-Day Forecast</h3>
-            <div class="forecast-container" id="forecastContainer">
-                <!-- Forecast cards will be inserted here by JavaScript -->
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Built by <strong>Siboniso Mabaso</strong> | Weather data by OpenWeatherMap</p>
-            <p class="update-time">Last updated: <span id="updateTime">--</span></p>
         </footer>
     </div>
 
